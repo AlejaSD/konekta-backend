@@ -1,10 +1,12 @@
 # Getting Started with [Fastify-CLI](https://www.npmjs.com/package/fastify-cli)
 
-Welcome to Smackdown, a simple blogging platform built with Fastify, TypeScript, and pnpm. This project was bootstrapped using Fastify-CLI and is designed to provide a fast, scalable backend for a blog with user authentication, post creation, and comment functionality.
+# Getting Started with this Project
+
+Welcome to this project, a simple blogging platform built with Fastify, TypeScript, and pnpm. This project was bootstrapped using Fastify-CLI and is designed to provide a fast, scalable backend for a blog with user authentication, post creation, and comment functionality.
 
 ## Project Description
 
-Smackdown is a backend for a personal blog system. It allows users to:
+This project is a backend for a personal blog system. It allows users to:
 - Register and log in to manage their accounts.
 - Create, update, and delete blog posts.
 - Comment on posts.
