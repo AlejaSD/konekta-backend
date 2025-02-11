@@ -1,6 +1,5 @@
 import { CommentModel } from "../../entities";
 
-
 export const deleteComment = async (_id: string): Promise<boolean | Error> => {
   const comment = await CommentModel.findById(_id);
   if (!comment) {

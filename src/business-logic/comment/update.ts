@@ -1,7 +1,8 @@
 import { Comment, CommentModel, partialPostDto } from "../../entities";
 
-
-export const updateComment = async (infoComment: partialPostDto): Promise<Comment> => {
+export const updateComment = async (
+  infoComment: partialPostDto
+): Promise<Comment> => {
   const updatedComment = await CommentModel.findByIdAndUpdate(
     infoComment._id,
     { $set: infoComment },
