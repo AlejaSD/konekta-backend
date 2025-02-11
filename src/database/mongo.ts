@@ -17,8 +17,6 @@ export const connectToDatabaseMongoAtlas = async (): Promise<
 > => {
   try {
     const connection = await mongoose.connect(MONGODB_ATLAS_URL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
     } as mongoose.ConnectOptions);
     console.log("Successfully connected to MongoDB Atlas");
     return connection; // Retornamos la conexión de mongoose

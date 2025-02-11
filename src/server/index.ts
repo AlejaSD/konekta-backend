@@ -2,10 +2,9 @@ import "dotenv/config";
 import fastify from 'fastify';
 import fastifyCors from '@fastify/cors';
 import { connectToDatabaseMongoAtlas } from "../database";
-/*import { registerRoutes } from "../routes";*/
+import { registerRoutes } from "../routes";
 
 const PORT = (process.env.PORT || 4200) as number;
-const HOST = (process.env.HOST || "0.0.0.0" as string);
 
 const corsOptions = {
   origin: "*",
@@ -21,15 +20,15 @@ const main = async () => {
   server.register(fastifyCors, corsOptions);
 
   server.register(
-    (instance, options, next) => /*{
+    (instance, options, next) => {
       registerRoutes(instance);
       next();
-    },*/
+    },
     { prefix: "api/v1" }
   );
   
 
-  server.listen({ port: Number(PORT), host: HOST }, (error, address) => {
+  server.listen({ port: Number(PORT) }, (error, address) => {
     if (error) {
       console.error(error);
       process.exit(1);

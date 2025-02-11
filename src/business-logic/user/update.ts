@@ -1,13 +1,13 @@
 import { partialUserDto, User, UserModel } from "../../entities";
 
 export const updateUser = async (infoUser: partialUserDto): Promise<User> => {
-  const user = await UserModel.findOne({ uuid: infoUser.uuid });
-  if (!user) {
+  const updatedUser = await UserModel.findByIdAndUpdate(
+    infoUser._id,
+    { $set: infoUser },
+    { new: true, runValidators: true }
+  );
+  if (!updatedUser) {
     throw new Error("User not found");
   }
-  const updatedUser = (await UserModel.findOneAndUpdate(
-    { uuid: infoUser.uuid },
-    infoUser
-  )) as User;
   return updatedUser;
 };
