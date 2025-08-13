@@ -1,10 +1,12 @@
 import { RouteOptions } from "fastify";
 import { upsertReaction } from "../../business-logic";
 import { createReactionDto } from "../../entities";
+import { authenticateToken } from "../../middleware";
 
 export const upsertReactionRoute: RouteOptions = {
   method: "POST",
   url: "/reactions",
+  preHandler: authenticateToken,
   handler: async (request, reply) => {
     const data = request.body as createReactionDto;
     try {

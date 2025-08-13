@@ -1,6 +1,7 @@
 import { RouteOptions } from "fastify";
 import { updateUser } from "../../business-logic";
 import { partialUserDto } from "../../entities";
+import { authenticateToken } from "../../middleware";
 
 interface Params {
   uuid: string;
@@ -9,6 +10,7 @@ interface Params {
 export const updatedUserRoute: RouteOptions = {
   method: "PUT",
   url: "/users/:uuid",
+  preHandler: authenticateToken,
   handler: async (request, reply) => {
     const data = request.body as partialUserDto;
     const { params } = request;

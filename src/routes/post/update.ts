@@ -1,6 +1,7 @@
 import { RouteOptions } from "fastify";
 import { partialPostDto } from "../../entities";
 import { updatePost } from "../../business-logic";
+import { authenticateToken } from "../../middleware";
 
 interface Params {
   uuid: string;
@@ -9,6 +10,7 @@ interface Params {
 export const updatedPostRoute: RouteOptions = {
   method: "PUT",
   url: "/posts/:uuid",
+  preHandler: authenticateToken,
   handler: async (request, reply) => {
     const data = request.body as partialPostDto;
     const { params } = request;

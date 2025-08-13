@@ -1,6 +1,7 @@
 import { RouteOptions } from "fastify";
 import { updateComment } from "../../business-logic";
 import { partialCommentDto } from "../../entities";
+import { authenticateToken } from "../../middleware";
 
 interface Params {
   uuid: string;
@@ -9,6 +10,7 @@ interface Params {
 export const updatedCommentRoute: RouteOptions = {
   method: "PUT",
   url: "/comments/:uuid",
+  preHandler: authenticateToken,
   handler: async (request, reply) => {
     const data = request.body as partialCommentDto;
     const { params } = request;

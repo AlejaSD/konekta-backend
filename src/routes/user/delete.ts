@@ -1,5 +1,6 @@
 import { RouteOptions } from "fastify";
 import { deleteUser } from "../../business-logic";
+import { authenticateToken } from "../../middleware";
 
 interface Params {
   uuid: string;
@@ -8,6 +9,7 @@ interface Params {
 export const deleteUserRoute: RouteOptions = {
   method: "DELETE",
   url: "/users/:uuid",
+  preHandler: authenticateToken,
   handler: async (request, reply) => {
     const { params } = request;
     const { uuid } = params as Params;

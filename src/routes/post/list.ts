@@ -1,9 +1,11 @@
 import { RouteOptions } from "fastify";
 import { getAllPosts } from "../../business-logic";
+import { authenticateToken } from "../../middleware";
 
 export const getAllPostsRoute: RouteOptions = {
   method: "GET",
   url: "/posts",
+  preHandler: authenticateToken,
   handler: async (request, reply) => {
     try {
       const obj = await getAllPosts();

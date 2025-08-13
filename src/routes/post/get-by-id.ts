@@ -1,5 +1,6 @@
 import { RouteOptions } from "fastify";
 import { getPostById } from "../../business-logic";
+import { authenticateToken } from "../../middleware";
 
 interface Params {
   uuid: string;
@@ -7,7 +8,7 @@ interface Params {
 export const getPostByIdRoute: RouteOptions = {
   method: "GET",
   url: "/posts/:uuid",
-
+  preHandler: authenticateToken,
   handler: async (request, reply) => {
     const { params } = request;
 

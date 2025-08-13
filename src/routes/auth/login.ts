@@ -9,12 +9,18 @@ export const loginRoute: RouteOptions = {
     const { body } = request;
     const { email, password } = body as User;
     try {
-      const user = await Login({ email, password });
-      reply.status(200).send(user);
+      const result = await Login({ email, password });
+      
+      if (result instanceof Error) {
+        reply.status(400).send({ error: result.message });
+        return;
+      }
+      
+      reply.status(200).send(result);
     } catch (err) {
       if (err instanceof Error) {
         console.log(err);
-        reply.status(500).send(err);
+        reply.status(500).send({ error: err.message });
       }
     }
   },

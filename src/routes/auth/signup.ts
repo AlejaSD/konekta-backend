@@ -1,5 +1,5 @@
 import { RouteOptions } from "fastify";
-import { createUserDto } from "../../entities";
+import { SignupDto } from "../../entities";
 import { Signup } from "../../business-logic";
 
 export const signupRoute: RouteOptions = {
@@ -12,15 +12,15 @@ export const signupRoute: RouteOptions = {
         request.body
       );
       // Nos aseguramos que el cuerpo se analice como JSON
-      const data = request.body as createUserDto;
-      const user = await Signup(data);
-      reply.status(200).send(user);
+      const data = request.body as SignupDto;
+      const result = await Signup(data);
+      reply.status(201).send(result);
     } catch (err) {
       if (err instanceof SyntaxError) {
         reply.status(400).send({ message: "Formato JSON inválido" });
       } else if (err instanceof Error) {
         console.log(err);
-        reply.status(500).send(err);
+        reply.status(400).send({ error: err.message });
       }
     }
   },
