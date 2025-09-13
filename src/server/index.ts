@@ -34,7 +34,7 @@ const main = async () => {
   );
   
 
-  server.listen({ port: Number(PORT) }, (error, address) => {
+  server.listen({ port: Number(PORT), host: "0.0.0.0" }, (error, address) => {
     if (error) {
       console.error(error);
       process.exit(1);
