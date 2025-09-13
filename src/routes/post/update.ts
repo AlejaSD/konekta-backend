@@ -16,7 +16,7 @@ export const updatedPostRoute: RouteOptions = {
     const { params } = request;
     const { uuid } = params as Params;
     try {
-      const postUpdate = await updatePost({ ...data, _id: uuid });
+      const postUpdate = await updatePost({ ...data, uuid: uuid });
       reply.status(200).send(postUpdate);
     } catch (err) {
       console.log(err);

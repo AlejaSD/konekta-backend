@@ -1,9 +1,19 @@
-import { SignupDto, User, UserModel } from "../../entities";
+import { SignupDto, UserModel } from "../../entities";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+interface SafeUser {
+  uuid: string;
+  email: string;
+  name: string;
+  role: string;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 interface SignupResponse {
-  user: Omit<User, 'password'>;
+  user: SafeUser;
   token: string;
 }
 
@@ -20,25 +30,31 @@ export const Signup = async (info: SignupDto): Promise<SignupResponse> => {
     email: info.email,
     password: newPassword,
     name: info.email.split('@')[0], // Usar parte del email como nombre por defecto
-    role: "user" // Rol por defecto
+  role: info.role || "user" // Rol por defecto (temporal: acepta role desde frontend)
   });
   await newUser.save();
   
   // Generar token JWT
   const token = jwt.sign(
     { 
-      userId: newUser._id,
-      email: newUser.email 
+      userId: newUser._id.toString(),
+      email: newUser.email,
+      role: newUser.role,
+      uuid: newUser.uuid
     },
     process.env.JWT_SECRET || 'fallback-secret-key',
     { expiresIn: '24h' }
   );
 
-  // Retornar usuario sin contraseña y el token
-  const { password, ...userWithoutPassword } = newUser.toObject();
-  
-  return {
-    user: userWithoutPassword,
-    token
+  const safeUser: SafeUser = {
+    uuid: newUser.uuid,
+    email: newUser.email,
+    name: newUser.name,
+    role: newUser.role,
+    status: (newUser as any).status,
+    createdAt: newUser.createdAt,
+    updatedAt: newUser.updatedAt
   };
+
+  return { user: safeUser, token };
 };

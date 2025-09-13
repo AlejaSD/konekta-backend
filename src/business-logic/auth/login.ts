@@ -7,8 +7,18 @@ interface LoginData {
   password: string;
 }
 
+interface SafeUser {
+  uuid: string;
+  email: string;
+  name: string;
+  role: string;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 interface LoginResponse {
-  user: Omit<User, 'password'>;
+  user: SafeUser;
   token: string;
 }
 
@@ -25,18 +35,24 @@ export const Login = async (data: LoginData): Promise<LoginResponse | Error> => 
   // Generar token JWT
   const token = jwt.sign(
     { 
-      userId: user._id,
-      email: user.email 
+      userId: (user as any)._id?.toString?.() || String((user as any)._id),
+      email: user.email,
+      role: (user as any).role,
+      uuid: (user as any).uuid
     },
     process.env.JWT_SECRET || 'fallback-secret-key',
     { expiresIn: '24h' }
   );
 
-  // Retornar usuario sin contraseña y el token
-  const { password, ...userWithoutPassword } = user;
-  
-  return {
-    user: userWithoutPassword,
-    token
+  const safeUser: SafeUser = {
+    uuid: (user as any).uuid,
+    email: user.email,
+    name: (user as any).name,
+    role: (user as any).role,
+    status: (user as any).status,
+    createdAt: (user as any).createdAt,
+    updatedAt: (user as any).updatedAt
   };
+
+  return { user: safeUser, token };
 };

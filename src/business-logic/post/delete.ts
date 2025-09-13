@@ -1,7 +1,7 @@
 import { PostModel } from "../../entities";
 
-export const deletePost = async (_id: string): Promise<boolean | Error> => {
-  const post = await PostModel.findById(_id);
+export const deletePost = async (uuid: string): Promise<boolean | Error> => {
+  const post = await PostModel.findOne({ uuid: uuid });
   if (!post) {
     return new Error("Post not found");
   }

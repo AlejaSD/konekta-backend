@@ -11,6 +11,7 @@ export const commentSchemaMongo = new Schema<Comment>(
     content: { type: String },
     userId: { type: String },
     postId: { type: String },
+    commentId: { type: String }, // ID del comentario padre (opcional)
   },
   {
     versionKey: false,

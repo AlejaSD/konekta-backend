@@ -11,6 +11,14 @@ export const postSchemaMongo = new Schema<Post>(
     title: { type: String },
     content: { type: String },
     userId: { type: String },
+    author: { type: String },
+    startDate: { type: Date },
+    endDate: { type: Date },
+    location: { type: String },
+    category: { type: String },
+    capacity: { type: Number },
+    postId: { type: String }, // ID del post padre (para seguimiento)
+    imageUrl: { type: String }, // URL de la imagen del post
   },
   {
     versionKey: false,

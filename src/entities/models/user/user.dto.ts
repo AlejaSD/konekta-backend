@@ -7,4 +7,6 @@ export type partialUserDto = Partial<User>;
 export interface SignupDto {
   email: string;
   password: string;
+  // temporal: permitir crear admins desde frontend
+  role?: "admin" | "user";
 }
